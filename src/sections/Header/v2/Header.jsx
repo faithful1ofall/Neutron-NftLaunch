@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useModal } from "src/utils/ModalContext";
+//import { useModal } from "src/utils/ModalContext";
 import { MdNotes, MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import NavWrapper from "./Header.style";
 import Button from "@components/button";
@@ -25,17 +25,17 @@ const { address, connect } = useChain("neutronlocalnet", true);
   
   
   
-  const { walletModalHandle } = useModal();
+//  const { walletModalHandle } = useModal();
   const [isMobileMenu, setMobileMenu] = useState(false);
 
   const handleMobileMenu = () => {
     setMobileMenu(!isMobileMenu);
   };
 
-  const handleWalletBtn = (e) => {
+/*  const handleWalletBtn = (e) => {
     e.preventDefault();
     walletModalHandle()
-  }
+  }*/
 
   return (
     <NavWrapper className="gamfi_header" id="navbar">
