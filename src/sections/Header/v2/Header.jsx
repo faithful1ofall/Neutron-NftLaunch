@@ -15,30 +15,15 @@ import walletIcon2 from "@assets/images/icons/uniswap.png"
 import walletIcon3 from "@assets/images/icons/market.png"
 import walletIcon4 from "@assets/images/icons/gate.png"
 
+import { useChain } from "@cosmos-kit/react";
 
-import { useShuttle } from "@delphi-labs/shuttle-react";
 
 const Header = () => {
-  const [wallet, setWallet] = useState(null);
+//  const [wallet, setWallet] = useState(null);
   
-  const { connect, extensionProviders, recentWallet } = useShuttle();
-
-  useEffect(() => {
-    if (recentWallet) {
-      setWallet(recentWallet);
-      console.log("Already connected wallet:", recentWallet);
-    }
-  }, [recentWallet]);
+const { address, connect } = useChain("neutronlocalnet", true);
   
-//  console.log('extensionProviders', extensionProviders);
-
-  const onConnect = async () => {
-    await connect({ extensionProviderId: "keplr", chainId: "injective-888" });
-  //  const wallet = getWallets({ chainId: 'injective-888' })[0];
-     setWallet(recentWallet);
-    console.log('recentWallet', recentWallet);
-    
-  };
+  
   
   const { walletModalHandle } = useModal();
   const [isMobileMenu, setMobileMenu] = useState(false);
@@ -143,10 +128,10 @@ const Header = () => {
                 sm
                 variant="white"
                 className="connect_btn"
-                onClick={() => onConnect()}
+                onClick={() => connect()}
               >
                 <img src={connectIcon.src} alt="icon" />
-                      {wallet ? `${wallet.account.address.slice(0, 6)}...${wallet.account.address.slice(-4)}` : "Connect"}
+                      {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : "Connect"}
                     
               </Button>
             </div>
