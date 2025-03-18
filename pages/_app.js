@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import GlobalStyles from "@assets/styles/GlobalStyles";
 import { CosmosKitProvider } from "src/lib/cosmos-kit-provider";
+import ContextProvider from "src/utils/ContextProvider";
 
 const App = ({ Component, pageProps }) => {
   const [mounted, setMounted] = useState(false);
@@ -12,12 +13,13 @@ const App = ({ Component, pageProps }) => {
   if (!mounted) return null; // Avoids hydration mismatch errors
 
   return (
-    <>
-      <GlobalStyles />
       <CosmosKitProvider>
+
+    <ContextProvider>
+         <GlobalStyles />
         <Component {...pageProps} />
+    </ContextProvider>
       </CosmosKitProvider>
-    </>
   );
 };
 
