@@ -21,7 +21,7 @@ import { useChain } from "@cosmos-kit/react";
 const Header = () => {
 //  const [wallet, setWallet] = useState(null);
   
-const { address, connect } = useChain("neutronlocalnet", true);
+const { address, connect } = useChain("neutrontestnet", true);
   
   
   
