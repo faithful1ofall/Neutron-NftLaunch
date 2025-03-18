@@ -24,9 +24,6 @@ export function CosmosKitProvider({ children }) {
         signingCosmwasm: {
           gasPrice: GasPrice.fromString("0.01untrn"),
         },
-        signingStargate: {
-          gasPrice: GasPrice.fromString("0.01untrn"),
-        },
       }}
     >
       {children}
