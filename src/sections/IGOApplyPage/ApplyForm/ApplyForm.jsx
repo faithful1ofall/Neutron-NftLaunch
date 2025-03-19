@@ -93,7 +93,7 @@ const ApplyForm = () => {
       }
 
       const msg = {
-    sender: recentWallet.account.address,
+    sender: address,
     contract: contractAddress,
     msg: {
       create_contract: {
