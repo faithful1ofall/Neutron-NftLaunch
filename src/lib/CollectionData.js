@@ -151,7 +151,7 @@ const fetchCollectionMetadata = async (collection) => {
     const image = metadatanft.image;
 
     const imagesrc = { src: image };
-    const injiconsrc = { src: 'https://raw.githubusercontent.com/cosmos/chain-registry/master/testnets/neutrontestnet/images/neutron-black-logo.svg' };
+    const injiconsrc = { src: 'https://s2.coinmarketcap.com/static/img/coins/64x64/26680.png' };
 
     return {
       thumb: imagesrc,
