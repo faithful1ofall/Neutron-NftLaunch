@@ -139,7 +139,7 @@ console.log(result);
 
       console.log("Transaction successful:", result);
 
-      const logs = result.response?.events || [];
+      const logs = result?.events || [];
 
 for (const { type, attributes } of logs) {
     if (type === "instantiate") {
