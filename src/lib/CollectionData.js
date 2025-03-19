@@ -1,16 +1,8 @@
-import { toBase64, fromBase64, ChainGrpcWasmApi } from "@injectivelabs/sdk-ts";
 import { useChain } from "@cosmos-kit/react";
 
 
 const { getSigningCosmWasmClient } = useChain("neutrontestnet", true);
   
-
-
-import { Network as InjectiveNetworks, getNetworkEndpoints } from "@injectivelabs/networks";
-const TEST_NETWORK = InjectiveNetworks.TestnetK8s;
-const TEST_ENDPOINTS = getNetworkEndpoints(TEST_NETWORK);
-
-const chainGrpcWasmApi1 = new ChainGrpcWasmApi(TEST_ENDPOINTS.grpc);
 
 const client = await getCosmWasmClient();
   
