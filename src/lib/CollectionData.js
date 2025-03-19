@@ -20,6 +20,8 @@ console.log('endpoint', TEST_ENDPOINTS.grpc);
 
 const chainGrpcWasmApi1 = new ChainGrpcWasmApi(TEST_ENDPOINTS.grpc);
 
+const client = CosmWasmClient.connect(RPC_ENDPOINT);
+  
 
 const fetchAllCollections = async () => {
   if (!process.env.NEXT_PUBLIC_FACTORY) {
@@ -42,7 +44,6 @@ const fetchAllCollections = async () => {
 
 console.log('responsetest', responsetest);*/
 
-  const client = await CosmWasmClient.connect(RPC_ENDPOINT);
   
 
   const collectionArray = [];
@@ -64,9 +65,9 @@ console.log('responsetest', responsetest);*/
 
       console.log('init response ', response);
 
-      if (!response || !response.data) break;
+      if (!response || !response.contracts) break;
 
-      const result = response.data;
+      const result = response;
      if (result.contracts.length === 0) break;
 
       result.contracts.forEach((contract_info) => {
@@ -93,66 +94,54 @@ console.log('responsetest', responsetest);*/
 const fetchCollection = async (collectionAddress) => {
   console.log('get collection', collectionAddress);
 
-  try {
-    const client = await CosmWasmClient.connect(RPC_ENDPOINT);
-
-    const contractInfo = await client.queryContractSmart(collectionAddress, {
-      contract_info: {},
-    });
-
-    console.log("RPC Contract Info:", contractInfo);
-    
-  } catch (error) {
-    console.error("Error fetching collection via RPC:", error);
-   
-  }
+  
   
   if(!collectionAddress) return null;
   
   try {
-    const response = await chainGrpcWasmApi1.fetchSmartContractState(
+    const response = await client.queryContractSmart(
       collectionAddress.contract_address,
-      toBase64({
+      {
         contract_info: {}
-      })
+      }
     );
 
-    const responsenum = await chainGrpcWasmApi1.fetchSmartContractState(
+    const responsenum = await client.queryContractSmart(
       collectionAddress.contract_address,
-      toBase64({
+      {
         num_tokens: {}
-      })
+      }
     );
 
     
-    const responseconfig = await chainGrpcWasmApi1.fetchSmartContractState(
+    const responseconfig = await client.queryContractSmart(
       collectionAddress.contract_address,
-      toBase64({
+      {
         config: {},
-      })
+      }
     );
     
     
     
     
-    const responsemintphase = await chainGrpcWasmApi1.fetchSmartContractState(
+    const responsemintphase = await client.queryContractSmart(
       collectionAddress.contract_address,
-      toBase64({
+      {
         mint_phase: {
           start_after: '0',
           limit: 30,
         },
-      })
+      }
     );
       
     
 
-    if (!response || !response.data) return null;
+    if (!response) return null;
 
-    const result = fromBase64(response.data);
-    const resultresponsenum = fromBase64(responsenum.data);
-    const resultconfig = fromBase64(responseconfig.data);
-    const resultmintphase = fromBase64(responsemintphase.data);
+    const result = response;
+    const resultresponsenum = responsenum;
+    const resultconfig = responseconfig;
+    const resultmintphase = responsemintphase;
    
     console.log('nft config', resultconfig);
 
