@@ -62,7 +62,7 @@ console.log('responsetest', responsetest);*/
         }
       );
 
-      console.log('init response ', reponse);
+      console.log('init response ', response);
 
       if (!response || !response.data) break;
 
