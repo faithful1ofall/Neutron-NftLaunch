@@ -1,4 +1,10 @@
 import { toBase64, fromBase64, ChainGrpcWasmApi } from "@injectivelabs/sdk-ts";
+import { useChain } from "@cosmos-kit/react";
+
+
+const { getSigningCosmWasmClient } = useChain("neutrontestnet", true);
+  
+
 
 import { Network as InjectiveNetworks, getNetworkEndpoints } from "@injectivelabs/networks";
 const TEST_NETWORK = InjectiveNetworks.TestnetK8s;
@@ -6,9 +12,11 @@ const TEST_ENDPOINTS = getNetworkEndpoints(TEST_NETWORK);
 
 const chainGrpcWasmApi1 = new ChainGrpcWasmApi(TEST_ENDPOINTS.grpc);
 
-
+const client = await getCosmWasmClient();
+  
 
 const fetchAllCollections = async () => {
+  
   if (!process.env.NEXT_PUBLIC_FACTORY) {
     throw new Error("NEXT_PUBLIC_FACTORY environment variable is not defined");
   }
@@ -20,19 +28,19 @@ const fetchAllCollections = async () => {
 
   try {
     while (iterationCount < MAX_ITERATIONS) {
-      const response = await chainGrpcWasmApi1.fetchSmartContractState(
+      const response = await client.queryContractSmart(
         process.env.NEXT_PUBLIC_FACTORY,
-        toBase64({
+        {
           get_all_collection: {
             start_after: start_after,
             limit: 30,
           },
-        })
+        }
       );
 
       if (!response || !response.data) break;
 
-      const result = fromBase64(response.data);
+      const result = response.data;
      if (result.contracts.length === 0) break;
 
       result.contracts.forEach((contract_info) => {
@@ -61,49 +69,49 @@ const fetchCollection = async (collectionAddress) => {
   if(!collectionAddress) return null;
   
   try {
-    const response = await chainGrpcWasmApi1.fetchSmartContractState(
+    const response = await client.queryContractSmart(
       collectionAddress.contract_address,
-      toBase64({
+      {
         contract_info: {}
-      })
+      }
     );
 
-    const responsenum = await chainGrpcWasmApi1.fetchSmartContractState(
+    const responsenum = await client.queryContractSmart(
       collectionAddress.contract_address,
-      toBase64({
+      {
         num_tokens: {}
-      })
+      }
     );
 
     
-    const responseconfig = await chainGrpcWasmApi1.fetchSmartContractState(
+    const responseconfig = await client.queryContractSmart(
       collectionAddress.contract_address,
-      toBase64({
+      {
         config: {},
-      })
+      }
     );
     
     
     
     
-    const responsemintphase = await chainGrpcWasmApi1.fetchSmartContractState(
+    const responsemintphase = await client.queryContractSmart(
       collectionAddress.contract_address,
-      toBase64({
+      {
         mint_phase: {
           start_after: '0',
           limit: 30,
         },
-      })
+      }
     );
       
     
 
     if (!response || !response.data) return null;
 
-    const result = fromBase64(response.data);
-    const resultresponsenum = fromBase64(responsenum.data);
-    const resultconfig = fromBase64(responseconfig.data);
-    const resultmintphase = fromBase64(responsemintphase.data);
+    const result = response.data;
+    const resultresponsenum = responsenum.data;
+    const resultconfig = responseconfig.data;
+    const resultmintphase = responsemintphase.data;
    
     console.log('nft config', resultconfig);
 
