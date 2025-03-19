@@ -20,6 +20,14 @@ export function CosmosKitProvider({ children }) {
       chains={[chain]}
       assetLists={[asset]}
       wallets={wallets}
+      signerOptions={{
+      signingCosmwasm: () => ({
+        gasPrice: GasPrice.fromString("0.01untrn"),
+      }),
+      signingStargate: () => ({
+        gasPrice: GasPrice.fromString("0.01untrn"),
+      }),
+    }}
     >
       {children}
     </ChainProvider>
