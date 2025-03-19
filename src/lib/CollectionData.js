@@ -6,7 +6,7 @@ import { Network as InjectiveNetworks, getNetworkEndpoints } from "@injectivelab
 
 //const { getCosmWasmClient } = useChain("neutrontestnet", true);
 
-const client = await getCosmWasmClient();
+//const client = await getCosmWasmClient();
 
 
 const TEST_NETWORK = InjectiveNetworks.TestnetK8s;
