@@ -14,7 +14,7 @@ const TEST_ENDPOINTS = getNetworkEndpoints(TEST_NETWORK);
 
 console.log('endpoint', TEST_ENDPOINTS.grpc);
 
-const chainGrpcWasmApi1 = new ChainGrpcWasmApi('http://grpc-falcron.pion-1.ntrn.tech');
+const chainGrpcWasmApi1 = new ChainGrpcWasmApi('https://grpc-falcron.pion-1.ntrn.tech');
 
 
 const fetchAllCollections = async () => {
