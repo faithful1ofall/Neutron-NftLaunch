@@ -1,7 +1,7 @@
-import { useChain } from "@cosmos-kit/react";
+/*import { useChain } from "@cosmos-kit/react";
 import { toBase64, fromBase64, ChainGrpcWasmApi } from "@injectivelabs/sdk-ts";
 import { Network as InjectiveNetworks, getNetworkEndpoints } from "@injectivelabs/networks";
-
+*/
 import { CosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 
 const RPC_ENDPOINT = "https://rpc-falcron.pion-1.ntrn.tech"; // Replace with the correct gRPC URL
@@ -13,20 +13,21 @@ const RPC_ENDPOINT = "https://rpc-falcron.pion-1.ntrn.tech"; // Replace with the
 //const client = await getCosmWasmClient();
 
 
-const TEST_NETWORK = InjectiveNetworks.TestnetK8s;
+/*const TEST_NETWORK = InjectiveNetworks.TestnetK8s;
 const TEST_ENDPOINTS = getNetworkEndpoints(TEST_NETWORK);
 
 console.log('endpoint', TEST_ENDPOINTS.grpc);
 
-const chainGrpcWasmApi1 = new ChainGrpcWasmApi(TEST_ENDPOINTS.grpc);
+const chainGrpcWasmApi1 = new ChainGrpcWasmApi(TEST_ENDPOINTS.grpc);*/
 
-const client = CosmWasmClient.connect(RPC_ENDPOINT);
+//const client = CosmWasmClient.connect(RPC_ENDPOINT);
   
 
 const fetchAllCollections = async () => {
   if (!process.env.NEXT_PUBLIC_FACTORY) {
     throw new Error("NEXT_PUBLIC_FACTORY environment variable is not defined");
   }
+  const client = await CosmWasmClient.connect(RPC_ENDPOINT);
 
   
  // const { getCosmWasmClient } = useChain("neutrontestnet", true);
@@ -93,6 +94,8 @@ console.log('responsetest', responsetest);*/
 
 const fetchCollection = async (collectionAddress) => {
   console.log('get collection', collectionAddress);
+  const client = await CosmWasmClient.connect(RPC_ENDPOINT);
+  
 
   
   
