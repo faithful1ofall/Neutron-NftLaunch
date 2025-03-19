@@ -79,7 +79,7 @@ console.log("Transaction successful:", result);
               {title}
             </Link>
           </h4>
-          <div className="dsc">PRICE INJ(uinj) = {price}</div>
+          <div className="dsc">PRICE UNTRN = {price}</div>
         </div>
       </div>
       <div className="project-content">
@@ -102,7 +102,7 @@ console.log("Transaction successful:", result);
         <div className="collection-address">
           <strong>Collection:</strong>{" "}
           <Link
-            href={`https://testnet.explorer.injective.network/contract/${collectionAddress}`}
+            href={`https://www.mintscan.io/neutron-testnet/address/${collectionAddress}`}
             target="_blank"
             rel="noopener noreferrer"
           >
