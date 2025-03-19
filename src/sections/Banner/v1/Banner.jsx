@@ -15,7 +15,7 @@ const Banner = () => {
               alt="banner icon"
             />
             <h1 className="banner-title">
-              NFT Launch Metaverse Web 3.0 NFT Agent Launchpad &amp; AI
+              NEUTRON NFT Launch Metaverse Web 3.0 NFT Agent Launchpad &amp; AI
             </h1>
             <div className="description">
               The next generation A.I ecosystem for NFT AI Agents
