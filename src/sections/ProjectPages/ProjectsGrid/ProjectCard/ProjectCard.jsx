@@ -40,7 +40,7 @@ const mintnft = async () => {
 
     
     
-    const client = await getSigningCosmWasmClient();
+const client = await getSigningCosmWasmClient();
 
 const result = await client.execute(
   address,
