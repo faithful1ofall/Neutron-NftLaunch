@@ -2,6 +2,10 @@ import { useChain } from "@cosmos-kit/react";
 import { toBase64, fromBase64, ChainGrpcWasmApi } from "@injectivelabs/sdk-ts";
 import { Network as InjectiveNetworks, getNetworkEndpoints } from "@injectivelabs/networks";
 
+import { CosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+
+const RPC_ENDPOINT = "https://rpc-falcron.pion-1.ntrn.tech"; // Replace with the correct gRPC URL
+
 
 
 //const { getCosmWasmClient } = useChain("neutrontestnet", true);
@@ -20,6 +24,20 @@ const chainGrpcWasmApi1 = new ChainGrpcWasmApi('https://grpc-falcron.pion-1.ntrn
 const fetchAllCollections = async () => {
   if (!process.env.NEXT_PUBLIC_FACTORY) {
     throw new Error("NEXT_PUBLIC_FACTORY environment variable is not defined");
+  }
+
+  try {
+    const client = await CosmWasmClient.connect(RPC_ENDPOINT);
+
+    const contractInfo = await client.queryContractSmart(collectionAddress, {
+      contract_info: {},
+    });
+
+    console.log("RPC Contract Info:", contractInfo);
+    
+  } catch (error) {
+    console.error("Error fetching collection via RPC:", error);
+   
   }
  // const { getCosmWasmClient } = useChain("neutrontestnet", true);
   
