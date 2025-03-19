@@ -35,6 +35,13 @@ const mintnft = async () => {
         extension: extensions1
       }
     };
+
+   const  funds = [
+      {
+        denom: 'untrn',
+        amount: price
+      }
+  ];
     
 
     
@@ -46,12 +53,7 @@ const result = await client.execute(
   collectionAddress,
   msg,
   "auto",
-  funds: [
-      {
-        denom: 'untrn',
-        amount: price
-      }
-  ]
+  funds,
 );
 console.log("Transaction successful:", result);
   alert("Smart contract executed successfully!");
