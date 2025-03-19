@@ -119,14 +119,9 @@ const ApplyForm = () => {
 
       const client = await getSigningCosmWasmClient();
 
-const result = await client.execute(
-    address,
-    contractAddress,
-    msg.msg,
-    "auto"
-);
+const result = await client.execute(msg);
 
-console.log(transactionHash);
+console.log(result);
 
  /*     const response = await simulate({
     messages: msgs,
