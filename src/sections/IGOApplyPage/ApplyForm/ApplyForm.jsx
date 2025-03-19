@@ -5,7 +5,6 @@ import ApplyFormStyleWrapper from "./ApplyFrom.style";
 import { PinataSDK } from "pinata-web3";
 import { generateImage, generateCollectionTheme, generateNFTCollection } from '../../../utils/openaigen';
 
-//import { useShuttle, MsgExecuteContract } from "@delphi-labs/shuttle-react";
 import { useChain } from "@cosmos-kit/react";
 
 
@@ -35,7 +34,6 @@ const ApplyForm = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [step, setStep] = useState(1);
 
-//  const { recentWallet, broadcast, simulate } = useShuttle();
   const { address, getSigningCosmWasmClient } = useChain("neutrontestnet", true);
   
   const onSubmit = async() => {
@@ -115,28 +113,6 @@ const result = await client.execute(
   msg,
   "auto"
 );
-
-console.log(result);
-
- /*     const response = await simulate({
-    messages: msgs,
-    wallet: recentWallet,
-  });
-   console.log('response for simulate', response);
-   const  feeest = response.fee?.amount[0];
-   const  gasLimit = response.fee?.gas;
-
-
-      const result = await broadcast({
-                wallet: recentWallet,
-                messages: msgs,
-                feeAmount: feeest?.amount,
-                gasLimit: gasLimit,
-            });
-            */
-
-      
-
       console.log("Transaction successful:", result);
 
       const logs = result?.events || [];
@@ -168,26 +144,8 @@ for (const { type, attributes } of logs) {
                     logo_url: link,
                     mint_wallet: address,
                     royalty_wallet: [{ percent: 10, wallet: address }]
-                }
-                }
-                };
-
-              /*  const configmsg = new MsgExecuteContract({
-                    sender: address,
-                    contract: value,  // Use extracted contract address
-                    msg: {
-                      config: {
-    minter:confignft.minter,  
-    total_supply: confignft.total_supply,  
-    max_mint: confignft.max_mint,  
-    native_token: confignft.native_token,  
-    base_url: confignft.base_url,  
-    logo_url: confignft.logo_url,  
-    mint_wallet: confignft.mint_wallet,  
-    royalty_wallet: confignft.royalty_wallet  
-  }   
-                    }
-                });*/
+                  }}};
+              
               
                 let phase = [];
                 if (phase.length === 0) {
@@ -206,8 +164,7 @@ for (const { type, attributes } of logs) {
                     contractAddress: value,
                     msg: {
                          mint_phase: { mint_phase: phase } 
-                    }
-                    };
+                    }};
 
                     const allmsgs1 = [msgactive, configmsg, phasemsg];
 
@@ -219,22 +176,6 @@ for (const { type, attributes } of logs) {
     allmsgs1,
     "auto"
 );
-                 /*     const resall = await simulate({
-    messages: allmsgs1,
-    wallet: recentWallet,
-  });
-   console.log('response for simulate', resall);
-   const  feeestall = resall.fee?.amount[0];
-   const  gasLimitall = resall.fee?.gas;
-                        const resultallmsg = await broadcast({
-                            wallet: recentWallet,
-                            messages: allmsgs1,
-                          feeAmount: feeestall?.amount,
-                gasLimit: gasLimitall,
-                        });
-                        */
-
-                
 
                       console.log('resultallmsg', resultallmsg);
                         
@@ -244,7 +185,7 @@ for (const { type, attributes } of logs) {
                     }
 
                     setLoading(false);
-                    return; // Stop execution after first match
+                    return;
                 }
             }
         }
