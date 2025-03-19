@@ -159,7 +159,7 @@ const fetchCollectionMetadata = async (collection) => {
       price: collection?.mintphase.price ? `${collection?.mintphase.price}` : "N/A",
       saleEnd: `${collection?.totalSupply - collection.numtokens}` || "N/A",
       coinIcon: injiconsrc,
-      address: collection?.address,
+      collectionAddress: collection?.address,
       projectDetails: [
         { title: "Current Mints", text: collection?.numtokens ? collection.numtokens.toString() : "0" },
         { title: "Total Supply", text: collection?.totalSupply ? collection.totalSupply.toString() : "N/A" },
