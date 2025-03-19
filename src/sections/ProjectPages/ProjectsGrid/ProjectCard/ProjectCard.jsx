@@ -53,6 +53,7 @@ const result = await client.execute(
   collectionAddress,
   msg,
   "auto",
+  "",
   funds,
 );
 console.log("Transaction successful:", result);
