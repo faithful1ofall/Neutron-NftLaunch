@@ -26,19 +26,7 @@ const fetchAllCollections = async () => {
     throw new Error("NEXT_PUBLIC_FACTORY environment variable is not defined");
   }
 
-  try {
-    const client = await CosmWasmClient.connect(RPC_ENDPOINT);
-
-    const contractInfo = await client.queryContractSmart(collectionAddress, {
-      contract_info: {},
-    });
-
-    console.log("RPC Contract Info:", contractInfo);
-    
-  } catch (error) {
-    console.error("Error fetching collection via RPC:", error);
-   
-  }
+  
  // const { getCosmWasmClient } = useChain("neutrontestnet", true);
   
 //const client = await getCosmWasmClient();
@@ -53,6 +41,8 @@ const fetchAllCollections = async () => {
       );
 
 console.log('responsetest', responsetest);*/
+
+  const client = await CosmWasmClient.connect(RPC_ENDPOINT);
   
 
   const collectionArray = [];
@@ -62,19 +52,21 @@ console.log('responsetest', responsetest);*/
 
   try {
     while (iterationCount < MAX_ITERATIONS) {
-      const response = await chainGrpcWasmApi1.fetchSmartContractState(
+      const response = await client.queryContractSmart(
         process.env.NEXT_PUBLIC_FACTORY,
-        toBase64({
+        {
           get_all_collection: {
             start_after: start_after,
             limit: 30,
           },
-        })
+        }
       );
+
+      console.log('init response ', reponse);
 
       if (!response || !response.data) break;
 
-      const result = fromBase64(response.data);
+      const result = response.data;
      if (result.contracts.length === 0) break;
 
       result.contracts.forEach((contract_info) => {
@@ -100,6 +92,21 @@ console.log('responsetest', responsetest);*/
 
 const fetchCollection = async (collectionAddress) => {
   console.log('get collection', collectionAddress);
+
+  try {
+    const client = await CosmWasmClient.connect(RPC_ENDPOINT);
+
+    const contractInfo = await client.queryContractSmart(collectionAddress, {
+      contract_info: {},
+    });
+
+    console.log("RPC Contract Info:", contractInfo);
+    
+  } catch (error) {
+    console.error("Error fetching collection via RPC:", error);
+   
+  }
+  
   if(!collectionAddress) return null;
   
   try {
