@@ -110,7 +110,7 @@ const ApplyForm = () => {
         amount: "10000",
       }
     ]
-  });
+  };
 
       console.log('msg', [msg]);
 
