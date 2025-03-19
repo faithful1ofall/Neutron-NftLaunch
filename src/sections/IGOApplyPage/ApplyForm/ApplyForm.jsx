@@ -147,13 +147,18 @@ for (const { type, attributes } of logs) {
             if (key === "_contract_address") {
                 console.log("New Contract address", value);
 
-                const msgactive = {
+                const msgactive ={ 
+                contractAddress: value,
+                msg: {
                    
                         mint_active: { is_active: true }
                   
+                }
                 };
 
                 const configmsg = {
+                contractAddress: value,
+                msg: {
                     minter: address,
                     total_supply: Number(count),
                     max_mint: Number(count),
@@ -162,6 +167,7 @@ for (const { type, attributes } of logs) {
                     logo_url: link,
                     mint_wallet: address,
                     royalty_wallet: [{ percent: 10, wallet: address }]
+                }
                 };
 
               /*  const configmsg = new MsgExecuteContract({
@@ -195,7 +201,10 @@ for (const { type, attributes } of logs) {
                     });
 
                     const phasemsg = {
+                    contractAddress: value,
+                    msg: {
                          mint_phase: { mint_phase: phase } 
+                    }
                     };
 
                     const allmsgs1 = [msgactive, configmsg, phasemsg];
@@ -203,9 +212,8 @@ for (const { type, attributes } of logs) {
                   console.log('allmsgs1 msg', allmsgs1);
 
                     try {
-                      const resultallmsg = await client.execute(
+                      const resultallmsg = await client.executeMultiple(
     address,
-    value,
     allmsgs1,
     "auto"
 );
