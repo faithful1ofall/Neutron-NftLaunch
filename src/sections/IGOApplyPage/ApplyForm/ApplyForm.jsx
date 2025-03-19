@@ -102,7 +102,7 @@ const ApplyForm = () => {
       }
       };
 
-      console.log('msg', [msg]);
+      console.log('msg', msg);
 
 
       const msgs = [msg];
@@ -112,7 +112,8 @@ const ApplyForm = () => {
 const result = await client.execute(
   address,
   contractAddress,
-  msg
+  msg,
+  "236000"
 );
 
 console.log(result);
