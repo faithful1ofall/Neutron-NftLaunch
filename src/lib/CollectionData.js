@@ -19,7 +19,7 @@ const fetchAllCollections = async () => {
   if (!process.env.NEXT_PUBLIC_FACTORY) {
     throw new Error("NEXT_PUBLIC_FACTORY environment variable is not defined");
   }
-  const { getSigningCosmWasmClient } = useChain("neutrontestnet", true);
+  const { getCosmWasmClient } = useChain("neutrontestnet", true);
   
 const client = await getCosmWasmClient();
   const responsetest = await client.queryContractSmart(
