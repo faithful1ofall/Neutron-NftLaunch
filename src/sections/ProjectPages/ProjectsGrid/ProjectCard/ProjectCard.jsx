@@ -46,7 +46,7 @@ const result = await client.execute(
   collectionAddress,
   msg,
   "auto",
-  [
+  funds: [
       {
         denom: 'untrn',
         amount: price
