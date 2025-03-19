@@ -3,7 +3,8 @@ import Link from "next/link";
 import CardHover from "@components/cardHover";
 import ProjectCardStyleWrapper from "./ProjectCard.style";
 import Button from "@components/button";
-import { useShuttle, MsgExecuteContract } from "@delphi-labs/shuttle-react";
+import { useChain } from "@cosmos-kit/react";
+
 
 const ProjectCard = ({
   thumb,
@@ -12,12 +13,13 @@ const ProjectCard = ({
   saleEnd,
   coinIcon,
   projectDetails,
-  address,
+  collectionAddress,
   socialLinks,
 }) => {
   const [loading, setLoading] = useState(false);
-const { recentWallet, broadcast, simulate } = useShuttle();
-
+//const { recentWallet, broadcast, simulate } = useShuttle();
+const { address, getSigningCosmWasmClient } = useChain("neutrontestnet", true);
+  
 
 const mintnft = async () => {
   setLoading(true); 
@@ -27,30 +29,34 @@ const mintnft = async () => {
     let extensions1 = {}
 
 
-    const msg1 = new MsgExecuteContract({
-    sender: recentWallet.account.address,
-    contract: address,
-    msg: {
+    const msg = {
+    {
       batch_mint_all: {
         token_count: 1,
-        owner: recentWallet.account.address,
+        owner: address,
         extension: extensions1
       }
     },
     funds: [
       {
-        denom: 'inj',
+        denom: 'untrn',
         amount: price
       }
     ]
-  });
+  };
     
-    console.log('totsupply', projectDetails[0].text);
+    
+    const client = await getSigningCosmWasmClient();
 
+const result = await client.execute(
+  address,
+  collectionAddress,
+  msg,
+  "auto"
+);
+console.log("Transaction successful:", result);
     
-
-    
-     const msgs1 = [msg1];
+/*     const msgs1 = [msg1];
   
   console.log('msgs', msgs1);
 
@@ -69,7 +75,7 @@ const result1 = await broadcast({
                 feeAmount: feeest?.amount,
                gasLimit: gasLimit,
             });
-    console.log(" Transaction successful:", result1);
+    console.log(" Transaction successful:", result1);*/
   
 
      /* const result = await broadcast({
@@ -125,11 +131,11 @@ const result1 = await broadcast({
         <div className="collection-address">
           <strong>Collection:</strong>{" "}
           <Link
-            href={`https://testnet.explorer.injective.network/contract/${address}`}
+            href={`https://testnet.explorer.injective.network/contract/${collectionAddress}`}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {address}
+            {collectionAddress}
           </Link>
         </div>
         <div className="social-links">
