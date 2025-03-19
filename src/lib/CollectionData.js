@@ -12,6 +12,8 @@ import { Network as InjectiveNetworks, getNetworkEndpoints } from "@injectivelab
 const TEST_NETWORK = InjectiveNetworks.TestnetK8s;
 const TEST_ENDPOINTS = getNetworkEndpoints(TEST_NETWORK);
 
+console.log('endpoint', TEST_ENDPOINTS.grpc);
+
 const chainGrpcWasmApi1 = new ChainGrpcWasmApi(TEST_ENDPOINTS.grpc);
 
 
@@ -19,10 +21,10 @@ const fetchAllCollections = async () => {
   if (!process.env.NEXT_PUBLIC_FACTORY) {
     throw new Error("NEXT_PUBLIC_FACTORY environment variable is not defined");
   }
-  const { getCosmWasmClient } = useChain("neutrontestnet", true);
+ // const { getCosmWasmClient } = useChain("neutrontestnet", true);
   
-const client = await getCosmWasmClient();
-  const responsetest = await client.queryContractSmart(
+//const client = await getCosmWasmClient();
+/*  const responsetest = await client.queryContractSmart(
         process.env.NEXT_PUBLIC_FACTORY,
         {
           get_all_collection: {
@@ -32,7 +34,7 @@ const client = await getCosmWasmClient();
         }
       );
 
-console.log('responsetest', responsetest);
+console.log('responsetest', responsetest);*/
   
 
   const collectionArray = [];
