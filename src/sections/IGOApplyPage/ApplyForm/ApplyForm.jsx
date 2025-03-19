@@ -93,9 +93,6 @@ const ApplyForm = () => {
       }
 
       const msg = {
-    address,
-    contractAddress,
-    {
       create_contract: {
         name: config.name,
         symbol: config.symbol,
@@ -103,14 +100,7 @@ const ApplyForm = () => {
         code_id: Number(config.code_id),
         logo_url: config.logo_url
       }
-    },
-    funds: [
-      {
-        denom: 'unrtn',
-        amount: "23600",
-      }
-    ]
-  };
+      };
 
       console.log('msg', [msg]);
 
@@ -119,7 +109,11 @@ const ApplyForm = () => {
 
       const client = await getSigningCosmWasmClient();
 
-const result = await client.execute(msg);
+const result = await client.execute(
+  address,
+  contractAddress,
+  msg
+);
 
 console.log(result);
 
