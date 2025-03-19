@@ -5,7 +5,9 @@ import ApplyFormStyleWrapper from "./ApplyFrom.style";
 import { PinataSDK } from "pinata-web3";
 import { generateImage, generateCollectionTheme, generateNFTCollection } from '../../../utils/openaigen';
 
-import { useShuttle, MsgExecuteContract } from "@delphi-labs/shuttle-react";
+//import { useShuttle, MsgExecuteContract } from "@delphi-labs/shuttle-react";
+import { useChain } from "@cosmos-kit/react";
+
 
 const pinata = new PinataSDK({
   pinataJwt: process.env.NEXT_PUBLIC_PINATAJWT,
@@ -33,8 +35,9 @@ const ApplyForm = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [step, setStep] = useState(1);
 
-  const { recentWallet, broadcast, simulate } = useShuttle();
-
+//  const { recentWallet, broadcast, simulate } = useShuttle();
+  const { address, getSigningCosmWasmClient } = useChain("neutrontestnet", true);
+  
   const onSubmit = async() => {
   setLoading(true);
 
@@ -84,7 +87,7 @@ const ApplyForm = () => {
       const config = {
                 name: name,
                 symbol: 'MLNFT',
-                minter: recentWallet.account.address,
+                minter: address,
                 code_id: process.env.NEXT_PUBLIC_CODEID,
                 logo_url: link,
       }
@@ -103,7 +106,7 @@ const ApplyForm = () => {
     },
     funds: [
       {
-        denom: 'inj',
+        denom: 'unrtn',
         amount: "10000",
       }
     ]
@@ -114,7 +117,18 @@ const ApplyForm = () => {
 
       const msgs = [msg];
 
-      const response = await simulate({
+      const client = await getSigningCosmWasmClient();
+
+const result = await client.execute(
+    address,
+    contractAddress,
+    msg,
+    "auto"
+);
+
+console.log(transactionHash);
+
+ /*     const response = await simulate({
     messages: msgs,
     wallet: recentWallet,
   });
@@ -129,6 +143,7 @@ const ApplyForm = () => {
                 feeAmount: feeest?.amount,
                 gasLimit: gasLimit,
             });
+            */
 
       
 
@@ -143,7 +158,7 @@ for (const { type, attributes } of logs) {
                 console.log("New Contract address", value);
 
                 const msgactive = new MsgExecuteContract({
-                    sender: recentWallet.account.address,
+                    sender: address,
                     contract: value,  // Use extracted contract address
                     msg: {
                         mint_active: { is_active: true }
@@ -151,18 +166,18 @@ for (const { type, attributes } of logs) {
                 });
 
                 const confignft = {
-                    minter: recentWallet.account.address,
+                    minter: address,
                     total_supply: Number(count),
                     max_mint: Number(count),
                     native_token: 'inj',
                     base_url: link,
                     logo_url: link,
-                    mint_wallet: recentWallet.account.address,
-                    royalty_wallet: [{ percent: 10, wallet: recentWallet.account.address }]
+                    mint_wallet: address,
+                    royalty_wallet: [{ percent: 10, wallet: address }]
                 };
 
                 const configmsg = new MsgExecuteContract({
-                    sender: recentWallet.account.address,
+                    sender: address,
                     contract: value,  // Use extracted contract address
                     msg: {
                       config: {
@@ -192,7 +207,7 @@ for (const { type, attributes } of logs) {
                     });
 
                     const phasemsg = new MsgExecuteContract({
-                        sender: recentWallet.account.address,
+                        sender: address,
                         contract: value,  // Use extracted contract address
                         msg: { mint_phase: { mint_phase: phase } }
                     });
@@ -202,7 +217,13 @@ for (const { type, attributes } of logs) {
                   console.log('allmsgs1 msg', allmsgs1);
 
                     try {
-                      const resall = await simulate({
+                      const resultallmsg = await client.execute(
+    address,
+    value,
+    allmsgs1,
+    "auto"
+);
+                 /*     const resall = await simulate({
     messages: allmsgs1,
     wallet: recentWallet,
   });
@@ -215,6 +236,7 @@ for (const { type, attributes } of logs) {
                           feeAmount: feeestall?.amount,
                 gasLimit: gasLimitall,
                         });
+                        */
 
                 
 
