@@ -93,9 +93,9 @@ const ApplyForm = () => {
       }
 
       const msg = {
-    sender: address,
-    contract: contractAddress,
-    msg: {
+    address,
+    contractAddress,
+    {
       create_contract: {
         name: config.name,
         symbol: config.symbol,
@@ -107,7 +107,7 @@ const ApplyForm = () => {
     funds: [
       {
         denom: 'unrtn',
-        amount: "10000",
+        amount: "23600",
       }
     ]
   };
