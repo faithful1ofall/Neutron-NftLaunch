@@ -26,8 +26,7 @@ const mintnft = async () => {
 
   try {
    
-    let extensions1 = {}
-
+    let extensions1 = {};
 
     const msg = {
       batch_mint_all: {
@@ -35,7 +34,7 @@ const mintnft = async () => {
         owner: address,
         extension: extensions1
       }
-    },
+    };
     
 
     
