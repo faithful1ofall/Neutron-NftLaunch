@@ -159,14 +159,16 @@ for (const { type, attributes } of logs) {
                 const configmsg = {
                 contractAddress: value,
                 msg: {
+                  config: {
                     minter: address,
                     total_supply: Number(count),
                     max_mint: Number(count),
-                    native_token: 'inj',
+                    native_token: 'untrn',
                     base_url: link,
                     logo_url: link,
                     mint_wallet: address,
                     royalty_wallet: [{ percent: 10, wallet: address }]
+                }
                 }
                 };
 
