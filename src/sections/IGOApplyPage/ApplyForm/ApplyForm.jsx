@@ -113,7 +113,7 @@ const result = await client.execute(
   address,
   contractAddress,
   msg,
-  ["236000"]
+  "auto"
 );
 
 console.log(result);
