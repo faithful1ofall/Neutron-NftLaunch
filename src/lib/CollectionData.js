@@ -1,4 +1,4 @@
-import { getCosmWasmClient } from "@cosmos-kit/react";
+import { useChain } from "@cosmos-kit/react";
 import { toBase64, fromBase64, ChainGrpcWasmApi } from "@injectivelabs/sdk-ts";
 import { Network as InjectiveNetworks, getNetworkEndpoints } from "@injectivelabs/networks";
 
@@ -19,7 +19,9 @@ const fetchAllCollections = async () => {
   if (!process.env.NEXT_PUBLIC_FACTORY) {
     throw new Error("NEXT_PUBLIC_FACTORY environment variable is not defined");
   }
-
+  const { getSigningCosmWasmClient } = useChain("neutrontestnet", true);
+  
+const client = await getCosmWasmClient();
   const responsetest = await client.queryContractSmart(
         process.env.NEXT_PUBLIC_FACTORY,
         {
