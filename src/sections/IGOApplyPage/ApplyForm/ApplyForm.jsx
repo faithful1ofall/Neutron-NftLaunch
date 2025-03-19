@@ -142,20 +142,18 @@ console.log(result);
       const logs = result.response?.events || [];
 
 for (const { type, attributes } of logs) {
-    if (type === "wasm") {
+    if (type === "instantiate") {
         for (const { key, value } of attributes) {
-            if (key === "contract_addr") {
+            if (key === "_contract_address") {
                 console.log("New Contract address", value);
 
-                const msgactive = new MsgExecuteContract({
-                    sender: address,
-                    contract: value,  // Use extracted contract address
-                    msg: {
+                const msgactive = {
+                   
                         mint_active: { is_active: true }
-                    }
-                });
+                  
+                };
 
-                const confignft = {
+                const configmsg = {
                     minter: address,
                     total_supply: Number(count),
                     max_mint: Number(count),
@@ -166,7 +164,7 @@ for (const { type, attributes } of logs) {
                     royalty_wallet: [{ percent: 10, wallet: address }]
                 };
 
-                const configmsg = new MsgExecuteContract({
+              /*  const configmsg = new MsgExecuteContract({
                     sender: address,
                     contract: value,  // Use extracted contract address
                     msg: {
@@ -181,7 +179,7 @@ for (const { type, attributes } of logs) {
     royalty_wallet: confignft.royalty_wallet  
   }   
                     }
-                });
+                });*/
               
                 let phase = [];
                 if (phase.length === 0) {
@@ -196,11 +194,9 @@ for (const { type, attributes } of logs) {
                         end_time: currentTime + oneYearInSeconds
                     });
 
-                    const phasemsg = new MsgExecuteContract({
-                        sender: address,
-                        contract: value,  // Use extracted contract address
-                        msg: { mint_phase: { mint_phase: phase } }
-                    });
+                    const phasemsg = {
+                         mint_phase: { mint_phase: phase } 
+                    };
 
                     const allmsgs1 = [msgactive, configmsg, phasemsg];
 
