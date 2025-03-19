@@ -92,7 +92,7 @@ const ApplyForm = () => {
                 logo_url: link,
       }
 
-      const msg = new MsgExecuteContract({
+      const msg = {
     sender: recentWallet.account.address,
     contract: contractAddress,
     msg: {
@@ -122,7 +122,7 @@ const ApplyForm = () => {
 const result = await client.execute(
     address,
     contractAddress,
-    msg,
+    msg.msg,
     "auto"
 );
 
