@@ -1,7 +1,7 @@
-import { useChain } from "@cosmos-kit/react";
+import { getCosmWasmClient } from "@cosmos-kit/react";
 
 
-const { getSigningCosmWasmClient } = useChain("neutrontestnet", true);
+//const { getCosmWasmClient } = useChain("neutrontestnet", true);
   
 
 const client = await getCosmWasmClient();
