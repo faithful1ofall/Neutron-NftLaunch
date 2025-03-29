@@ -148,8 +148,11 @@ const fetchCollectionMetadata = async (collection) => {
 
     console.log(metadatanft.image, 'numtokems', collection?.numtokens);
 
-    const image = metadatanft.image;
+    const image = metadatanft.image.startsWith("ipfs://")
+    ? metadatanft.image.replace("ipfs://", "https://gateway.pinata.cloud/ipfs/")
+    : metadatanft.image
 
+    
     const imagesrc = { src: image };
     const injiconsrc = { src: 'https://s2.coinmarketcap.com/static/img/coins/64x64/26680.png' };
 
